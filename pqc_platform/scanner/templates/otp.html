@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+<div class="col-md-5">
+
+<div class="card shadow p-4">
+
+<h4 class="text-center mb-3">Two-Factor Authentication</h4>
+
+{% if setup %}
+
+<p class="text-center text-muted">
+Scan this QR code using Google Authenticator
+</p>
+
+<div class="text-center mb-3">
+
+<img src="data:image/png;base64,{{ qr }}" width="200">
+
+</div>
+
+{% endif %}
+
+<form method="POST">
+
+{% csrf_token %}
+
+<label class="form-label">Enter 6-digit OTP</label>
+
+<input
+type="text"
+name="otp"
+class="form-control text-center"
+placeholder="123456"
+required
+>
+
+<br>
+
+<button class="btn btn-primary w-100">
+Verify
+</button>
+
+</form>
+
+{% if error %}
+<p class="text-danger text-center mt-2">{{ error }}</p>
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

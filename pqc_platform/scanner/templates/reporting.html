@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card p-4">
+
+<h4 class="mb-4">Reporting Center</h4>
+
+<form method="POST" action="/generate-report/">
+
+{% csrf_token %}
+
+<h6>Select Report Contents</h6>
+
+<div class="form-check">
+<input class="form-check-input" type="checkbox" name="inventory" checked>
+<label class="form-check-label">Asset Inventory</label>
+</div>
+
+<div class="form-check">
+<input class="form-check-input" type="checkbox" name="cbom" checked>
+<label class="form-check-label">Cryptographic Bill of Materials (CBOM)</label>
+</div>
+
+<div class="form-check">
+<input class="form-check-input" type="checkbox" name="pqc_posture">
+<label class="form-check-label">PQC Posture Analytics</label>
+</div>
+
+<div class="form-check">
+<input class="form-check-input" type="checkbox" name="cyber_rating">
+<label class="form-check-label">Cyber Rating</label>
+</div>
+
+
+<hr>
+
+<h6>Select Export Format</h6>
+
+<select class="form-select" name="format">
+
+<option value="csv">CSV</option>
+<option value="json">JSON</option>
+<option value="excel">Excel</option>
+<option value="pdf">PDF</option>
+
+</select>
+
+<br>
+
+<button class="btn btn-primary">
+Generate Report
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

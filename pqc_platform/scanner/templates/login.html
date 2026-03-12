@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+<div class="col-md-5">
+
+<div class="card shadow p-4">
+
+<h4 class="text-center mb-4">
+PQC Security Platform Login
+</h4>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+
+<label class="form-label">Username</label>
+
+<input
+type="text"
+name="username"
+class="form-control"
+placeholder="Enter username"
+required
+>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">Password</label>
+
+<input
+type="password"
+name="password"
+class="form-control"
+placeholder="Enter password"
+required
+>
+
+</div>
+
+<button class="btn btn-dark w-100">
+Login Securely
+</button>
+
+</form>
+
+{% if error %}
+<p class="text-danger text-center mt-3">{{ error }}</p>
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

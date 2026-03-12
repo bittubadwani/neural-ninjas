@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="card p-4">
+
+<h4 class="mb-4">PQC Posture Analytics</h4>
+
+<!-- KPI CARDS -->
+
+<div class="row mb-4">
+
+<div class="col-md-3">
+<div class="card p-3 text-center">
+<h6 class="text-muted">Total Assets</h6>
+<h3>{{ total_assets }}</h3>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card p-3 text-center">
+<h6 class="text-muted">Cyber Rating</h6>
+<h3>{{ cyber_rating }}</h3>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card p-3 text-center">
+<h6 class="text-muted">Low Risk</h6>
+<h3>{{ low_risk }}</h3>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card p-3 text-center">
+<h6 class="text-muted">High Risk</h6>
+<h3>{{ high_risk }}</h3>
+</div>
+</div>
+
+</div>
+
+
+<!-- CHARTS -->
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="card p-3">
+
+<h5 class="mb-3">PQC Classification</h5>
+
+<canvas id="pqcChart"></canvas>
+
+</div>
+
+</div>
+
+
+<div class="col-md-6">
+
+<div class="card p-3">
+
+<h5 class="mb-3">Risk Overview</h5>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RECOMMENDATIONS -->
+
+<div class="card p-4 mt-4">
+
+<h5>Security Recommendations</h5>
+
+<ul>
+
+{% for r in recommendations %}
+
+<li>{{ r }}</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* PQC Classification Chart */
+
+new Chart(document.getElementById("pqcChart"), {
+
+type: "pie",
+
+data: {
+
+labels: ["PQC Ready", "Standard", "Legacy", "Critical"],
+
+datasets: [{
+
+data: [
+
+{{ pqc_ready }},
+{{ standard }},
+{{ legacy }},
+{{ critical }}
+
+],
+
+backgroundColor: [
+
+"#22c55e",
+"#3b82f6",
+"#f59e0b",
+"#ef4444"
+
+]
+
+}]
+
+}
+
+});
+
+
+/* Risk Overview Chart */
+
+new Chart(document.getElementById("riskChart"), {
+
+type: "bar",
+
+data: {
+
+labels: ["Low Risk", "Medium Risk", "High Risk"],
+
+datasets: [{
+
+data: [
+
+{{ low_risk }},
+{{ medium_risk }},
+{{ high_risk }}
+
+],
+
+backgroundColor: [
+
+"#22c55e",
+"#f59e0b",
+"#ef4444"
+
+]
+
+}]
+
+}
+
+});
+
+</script>
+
+{% endblock %}

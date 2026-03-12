@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="mb-4">Scan Center</h3>
+
+<div class="row">
+
+<!-- SINGLE SCAN -->
+
+<div class="col-md-4">
+
+<div class="card p-3 mb-4">
+
+<h5>Single Scan</h5>
+
+<form method="POST" action="/scan/">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="domain"
+class="form-control mb-2"
+placeholder="example.com"
+required
+>
+
+<button class="btn btn-primary w-100">
+Start Scan
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- BATCH SCAN -->
+
+<div class="col-md-4">
+
+<div class="card p-3 mb-4">
+
+<h5>Batch Scan</h5>
+
+<form method="POST" action="/batch-scan/">
+
+{% csrf_token %}
+
+<textarea
+name="domains"
+class="form-control mb-2"
+rows="4"
+placeholder="example.com&#10;google.com&#10;bank.com"
+></textarea>
+
+<button class="btn btn-primary w-100">
+Scan Domains
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- DISCOVERY -->
+
+<div class="col-md-4">
+
+<div class="card p-3 mb-4">
+
+<h5>Subdomain Discovery</h5>
+
+<form method="POST" action="/discover/">
+
+{% csrf_token %}
+
+<input
+type="text"
+name="domain"
+class="form-control mb-2"
+placeholder="example.com"
+required
+>
+
+<button class="btn btn-primary w-100">
+Discover & Scan
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RESULTS TABLE -->
+
+{% if result or assets %}
+
+<div class="card p-4">
+
+<h5 class="mb-3">Scan Results</h5>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+<th>Domain</th>
+<th>IP</th>
+<th>TLS</th>
+<th>Cipher</th>
+<th>PQC</th>
+<th>Risk</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% if result %}
+
+<tr>
+<td>{{ result.domain }}</td>
+<td>{{ result.ip_address }}</td>
+<td>{{ result.tls_version }}</td>
+<td>{{ result.cipher_suite }}</td>
+<td>{{ result.pqc_status }}</td>
+<td>{{ result.risk_score }}</td>
+</tr>
+
+{% endif %}
+
+
+{% if assets %}
+
+{% for asset in assets %}
+
+<tr>
+<td>{{ asset.domain }}</td>
+<td>{{ asset.ip_address }}</td>
+<td>{{ asset.tls_version }}</td>
+<td>{{ asset.cipher_suite }}</td>
+<td>{{ asset.pqc_status }}</td>
+<td>{{ asset.risk_score }}</td>
+</tr>
+
+{% endfor %}
+
+{% endif %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

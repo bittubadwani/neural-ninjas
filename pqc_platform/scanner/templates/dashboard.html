@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<h3 class="mb-4">Security Dashboard</h3>
+
+<div class="row">
+
+<!-- KPI Cards -->
+
+<div class="col-md-3 mb-4">
+<div class="card p-3">
+<h6 class="text-muted">Total Assets</h6>
+<h3>{{ total_assets }}</h3>
+</div>
+</div>
+
+<div class="col-md-3 mb-4">
+<div class="card p-3">
+<h6 class="text-muted">Cyber Rating</h6>
+<h3>{{ cyber_rating }}</h3>
+</div>
+</div>
+
+<div class="col-md-3 mb-4">
+<div class="card p-3">
+<h6 class="text-muted">Low Risk Assets</h6>
+<h3>{{ low_risk }}</h3>
+</div>
+</div>
+
+<div class="col-md-3 mb-4">
+<div class="card p-3">
+<h6 class="text-muted">High Risk Assets</h6>
+<h3>{{ high_risk }}</h3>
+</div>
+</div>
+
+</div>
+
+
+<div class="row">
+
+<!-- PQC Chart -->
+
+<div class="col-md-6 mb-4">
+
+<div class="card p-4">
+
+<h5>PQC Posture</h5>
+
+<canvas id="pqcChart"></canvas>
+
+</div>
+
+</div>
+
+
+<!-- Risk Chart -->
+
+<div class="col-md-6 mb-4">
+
+<div class="card p-4">
+
+<h5>Risk Overview</h5>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- Recent Assets Table -->
+
+<div class="card p-4">
+
+<h5 class="mb-3">Recent Scanned Assets</h5>
+
+<table class="table table-striped">
+
+<thead>
+
+<tr>
+<th>Domain</th>
+<th>TLS Version</th>
+<th>Cipher Suite</th>
+<th>PQC Status</th>
+<th>Risk Score</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for asset in assets %}
+
+<tr>
+<td>{{ asset.domain }}</td>
+<td>{{ asset.tls_version }}</td>
+<td>{{ asset.cipher_suite }}</td>
+<td>
+<span class="badge bg-info">{{ asset.pqc_status }}</span>
+</td>
+<td>{{ asset.risk_score }}</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<script>
+
+new Chart(document.getElementById('pqcChart'),{
+
+type:'pie',
+
+data:{
+labels:['PQC Ready','Standard','Legacy','Critical'],
+datasets:[{
+data:[
+{{ pqc_ready }},
+{{ standard }},
+{{ legacy }},
+{{ critical }}
+],
+backgroundColor:[
+"#22c55e",
+"#3b82f6",
+"#f59e0b",
+"#ef4444"
+]
+}]
+}
+
+})
+
+
+new Chart(document.getElementById('riskChart'),{
+
+type:'bar',
+
+data:{
+labels:['Low Risk','Medium Risk','High Risk'],
+datasets:[{
+data:[
+{{ low_risk }},
+{{ medium_risk }},
+{{ high_risk }}
+],
+backgroundColor:[
+"#22c55e",
+"#f59e0b",
+"#ef4444"
+]
+}]
+}
+
+})
+
+</script>
+
+{% endblock %}
