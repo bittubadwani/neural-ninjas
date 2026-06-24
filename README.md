@@ -1,7 +1,5 @@
-# 4. GitHub README
-
-Project Name:
-Quantum-Proof Systems Scanner
+#Project Name:
+#Quantum-Proof Systems Scanner
 
 Description:
 A cybersecurity platform for analyzing cryptographic posture of public-facing applications and evaluating readiness for Post-Quantum Cryptography.
